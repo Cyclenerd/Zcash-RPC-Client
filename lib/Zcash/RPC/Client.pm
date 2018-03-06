@@ -1,4 +1,4 @@
-package Bitcoin::RPC::Client;
+package Zcash::RPC::Client;
 
 use 5.008;
 
@@ -8,29 +8,29 @@ use warnings;
 use Moo;
 use JSON::RPC::Legacy::Client;
 
-our $VERSION  = '0.08';
+our $VERSION  = '1.00';
 
 has jsonrpc  => (is => "lazy", default => sub { "JSON::RPC::Legacy::Client"->new });
 has user     => (is => 'ro');
 has password => (is => 'ro');
 has cookie   => (is => 'ro', isa => \&isa_cookie);
-has host     => (is => 'ro');
+has host     => (is => "lazy", default => '127.0.0.1');
 has wallet   => (is => 'ro');
-has port     => (is => "lazy", default => 8332);
+has port     => (is => "lazy", default => 8232);
 has timeout  => (is => "lazy", default => 20);
 has debug    => (is => "lazy", default => 0);
 
 # SSL constructor options
-#  OpenSSL support has been removed from Bitcoin Core as of v0.12.0
-#  but should work with older versions
-has ssl      => (is => 'ro', default => 0);
+#  OpenSSL support has been removed from Bitcoin Core as of v0.12.0 and Zcash
+#  but should work with older versions and connections via a proxy.
+has ssl             => (is => 'ro', default => 0);
 has verify_hostname => (is => 'ro', default => 1);
 
 my $DEBUG_DUMPED = 0;
 
 sub AUTOLOAD {
    my $self   = shift;
-   my $method = $Bitcoin::RPC::Client::AUTOLOAD;
+   my $method = $Zcash::RPC::Client::AUTOLOAD;
 
    $method =~ s/.*:://;
 
@@ -66,7 +66,7 @@ sub AUTOLOAD {
    $client->ua->timeout($self->timeout);
 
    # Set Agent, let them know who we be
-   $client->ua->agent("Bitcoin::RPC::Client/" . $VERSION);
+   $client->ua->agent("Zcash::RPC::Client/" . $VERSION);
 
    # Turn on debugging for LWP::UserAgent
    if ($self->debug) {
@@ -153,85 +153,78 @@ sub isa_cookie {
 
 =head1 NAME
 
-Bitcoin::RPC::Client - Bitcoin Core JSON RPC Client
+Zcash::RPC::Client -  Zcash Payment API Client
 
 =head1 SYNOPSIS
 
-   use Bitcoin::RPC::Client;
+   use Zcash::RPC::Client;
 
-   # Create Bitcoin::RPC::Client object
-   $btc = Bitcoin::RPC::Client->new(
+   # Create Zcash::RPC::Client object
+   $zec = Zcash::RPC::Client->new(
       user     => "username",
       password => "p4ssword",
-      host     => "127.0.0.1",
    );
 
-   # Check the block height of our bitcoin node
+   # Zcash supports all commands in the Bitcoin Core API
+   # Check the block height of our Zcash node
    #     https://bitcoin.org/en/developer-reference#getblockchaininfo
-   $chaininfo = $btc->getblockchaininfo;
-   $blocks = $chaininfo->{blocks};
+   $getinfo = $zec->getinfo;
+   $blocks = $getinfo->{blocks};
 
-   # Estimate a reasonable transaction fee
-   #     https://bitcoin.org/en/developer-reference#estimatefee
-   $fee = $btc->estimatesmartfee(6);
-   $feerate = $fee->{feerate};
-
-   # Set the transaction fee
-   #     https://bitcoin.org/en/developer-reference#settxfee
-   $settx = $btc->settxfee($feerate);
-
-   # Check your balance
-   # (JSON::Boolean objects must be passed as boolean parameters)
-   #     https://bitcoin.org/en/developer-reference#getbalance
-   $balance = $btc->getbalance("yourAccountName", 1, JSON::true);
-
-   # Send to an address
-   #     https://bitcoin.org/en/developer-reference#sendtoaddress
-   $transid = $btc->sendtoaddress("1Ky49cu7FLcfVmuQEHLa1WjhRiqJU2jHxe","0.01");
+   # Return the total value of funds stored in the node’s wallet
+   #     https://github.com/zcash/zcash/blob/master/doc/payment-api.md
+   $z_gettotalbalance = $zec->z_gettotalbalance;
+   # Output:
+   #{
+   #  "transparent" : 1.23,
+   #  "private" : 4.56,
+   #  "total" : 5.79
+   #}
+   print $z_gettotalbalance->{total};
+   # 5.79
 
    # See ex/example.pl for more in depth JSON handling:
-   #     https://github.com/whindsx/Bitcoin-RPC-Client/tree/master/ex
+   #     https://github.com/Cyclenerd/Zcash-RPC-Client/tree/master/ex
 
 =head1 DESCRIPTION
 
-This module implements in Perl the functions that are currently part of the
-Bitcoin Core RPC client calls (bitcoin-cli).The function names and parameters
-are identical between the Bitcoin Core API and this module. This is done for
-consistency so that a developer only has to reference one manual:
-https://bitcoin.org/en/developer-reference#remote-procedure-calls-rpcs
+This module is a pure Perl implementation of the methods that are currently 
+part of the Zcash Payment API client calls. The method names and parameters are 
+identical between the Zcash Payment API reference and this module. This is 
+done for consistency so that a developer only has to reference one manual:
+https://github.com/zcash/zcash/blob/master/doc/payment-api.md
 
 =head1 CONSTRUCTOR
 
-$btc = Bitcoin::RPC::Client->new( %options )
+$zec = Zcash::RPC::Client->new( %options )
 
-This method creates a new C<Bitcoin::RPC::Client> and returns it.
+This method creates a new C<Zcash::RPC::Client> and returns it.
 
    Key                 Default
    -----------         -----------
-   host                undef (Required)
+   host                127.0.0.1
    user                undef (Required)
    password            undef (Required)
    cookie              undef
-   port                8332
+   port                8232
    wallet              undef
    timeout             20
    ssl                 0
    verify_hostname     1
    debug               0
-   syntax              0
 
 cookie - Absolute path to your RPC cookie file (.cookie). When cookie is
 defined user and password will be ignored and the contents of cookie will
 be used instead.
 
 wallet - Work against specific wallet.dat file when Multi-wallet support is
-enabled (Bitcoin Core v0.15+ only)
+enabled
 
 timeout - Set the timeout in seconds for individual RPC requests. Increase
-this for slow bitcoind instances.
+this for slow zcashd instances.
 
-ssl - OpenSSL support has been removed from the Bitcoin Core project as of
-v0.12.0. However Bitcoin::RPC::Client will work over SSL with earlier versions
+ssl - OpenSSL support has been removed from the Bitcoin Core and Zcash project. 
+However Zcash::RPC::Client will work over SSL with earlier versions
 or with a reverse web proxy such as nginx.
 
 verify_hostname - Disable SSL certificate verification. Needed when
@@ -239,26 +232,30 @@ bitcoind is fronted by a proxy or when using a self-signed certificate.
 
 debug - Turns on raw HTTP request/response output from LWP::UserAgent.
 
-syntax - Removed as of Bitcoin::RPC::Client v0.7, however having the value
-set will not break anything.
-
-=head1 AUTHOR
-
-Wesley Hinds wesley.hinds@gmail.com
-
 =head1 AVAILABILITY
 
 The latest branch is avaiable from Github.
 
-https://github.com/whindsx/Bitcoin-RPC-Client.git
+https://github.com/Cyclenerd/Zcash-RPC-Client
 
-=head1 DONATE
+=head1 CAVEATS
 
-1Ky49cu7FLcfVmuQEHLa1WjhRiqJU2jHxe
+Boolean parameters must be passed as JSON::Boolean objects E.g. JSON::true
+
+=head1 AUTHOR
+
+Zcash is based on Bitcoin. Zcash supports all commands in the Bitcoin 
+Core API (as of version 0.11.2).
+
+This module is a fork of Bitcoin::RPC::Client.
+
+C<Bitcoin::RPC::Client> is developed by Wesley Hinds. This Zcash fork is 
+mantained by Nils Knieling.
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright 2016 Wesley Hinds.
+Copyright (c) 2018 Nils Knieling
+Copyright (c) 2016-2018 Wesley Hinds
 
 This program is free software; you can redistribute it and/or modify it
 under the terms of the the Artistic License (2.0). You may obtain a

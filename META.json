@@ -1,7 +1,7 @@
 {
-   "abstract" : "Bitcoin Core JSON RPC Client",
+   "abstract" : "Zcash JSON RPC Client",
    "author" : [
-      "Wesley Hinds <wesley.hinds@gmail.com>"
+      "Nils Knieling"
    ],
    "dynamic_config" : 0,
    "generated_by" : "ExtUtils::MakeMaker version 6.98, CPAN::Meta::Converter version 2.142690",
@@ -12,7 +12,7 @@
       "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
       "version" : "2"
    },
-   "name" : "Bitcoin-RPC-Client",
+   "name" : "Zcash-RPC-Client",
    "no_index" : {
       "directory" : [
          "t",
@@ -42,9 +42,9 @@
    "resources" : {
       "repository" : {
          "type" : "git",
-         "url" : "https://github.com/whindsx/Bitcoin-RPC-Client",
+         "url" : "https://github.com/Cyclenerd/Zcash-RPC-Client",
          "web" : ""
       }
    },
-   "version" : "0.08"
+   "version" : "1.00"
 }

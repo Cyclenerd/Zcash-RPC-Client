@@ -1,7 +1,7 @@
 ---
-abstract: 'Bitcoin Core JSON RPC Client'
+abstract: 'Zcash JSON RPC Client'
 author:
-  - 'Wesley Hinds <wesley.hinds@gmail.com>'
+  - 'Nils Knieling'
 build_requires:
   Test::More: '0'
 configure_requires:
@@ -22,5 +22,5 @@ requires:
   Moo: '1.001'
   perl: '5.006'
 resources:
-  repository: https://github.com/whindsx/Bitcoin-RPC-Client 
-version: '0.08'
+  repository: https://github.com/Cyclenerd/Zcash-RPC-Client
+version: '1.00'
