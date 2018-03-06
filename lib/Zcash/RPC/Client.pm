@@ -171,7 +171,7 @@ Zcash::RPC::Client -  Zcash Payment API Client
    $getinfo = $zec->getinfo;
    $blocks = $getinfo->{blocks};
 
-   # Return the total value of funds stored in the node’s wallet
+   # Return the total value of funds stored in the node's wallet
    #     https://github.com/zcash/zcash/blob/master/doc/payment-api.md
    $z_gettotalbalance = $zec->z_gettotalbalance;
    # Output:
@@ -192,7 +192,7 @@ This module is a pure Perl implementation of the methods that are currently
 part of the Zcash Payment API client calls. The method names and parameters are 
 identical between the Zcash Payment API reference and this module. This is 
 done for consistency so that a developer only has to reference one manual:
-https://github.com/zcash/zcash/blob/master/doc/payment-api.md
+L<https://github.com/zcash/zcash/blob/master/doc/payment-api.md>
 
 =head1 CONSTRUCTOR
 
@@ -213,30 +213,35 @@ This method creates a new C<Zcash::RPC::Client> and returns it.
    verify_hostname     1
    debug               0
 
-cookie - Absolute path to your RPC cookie file (.cookie). When cookie is
+B<host> - Address listens for JSON-RPC connections
+
+B<user> and B<password> - User and Password for JSON-RPC api commands
+
+B<cookie> - Absolute path to your RPC cookie file (.cookie). When cookie is
 defined user and password will be ignored and the contents of cookie will
 be used instead.
 
-wallet - Work against specific wallet.dat file when Multi-wallet support is
+B<port> - TCP port for JSON-RPC connections
+
+B<wallet> - Work against specific wallet.dat file when Multi-wallet support is
 enabled
 
-timeout - Set the timeout in seconds for individual RPC requests. Increase
+B<timeout> - Set the timeout in seconds for individual RPC requests. Increase
 this for slow zcashd instances.
 
-ssl - OpenSSL support has been removed from the Bitcoin Core and Zcash project. 
+B<ssl> - OpenSSL support has been removed from the Bitcoin Core and Zcash project. 
 However Zcash::RPC::Client will work over SSL with earlier versions
 or with a reverse web proxy such as nginx.
 
-verify_hostname - Disable SSL certificate verification. Needed when
+B<verify_hostname> - Disable SSL certificate verification. Needed when
 bitcoind is fronted by a proxy or when using a self-signed certificate.
 
-debug - Turns on raw HTTP request/response output from LWP::UserAgent.
+B<debug> - Turns on raw HTTP request/response output from LWP::UserAgent.
 
 =head1 AVAILABILITY
 
-The latest branch is avaiable from Github.
-
-https://github.com/Cyclenerd/Zcash-RPC-Client
+The latest branch is avaiable from GitHub:
+L<https://github.com/Cyclenerd/Zcash-RPC-Client>
 
 =head1 CAVEATS
 
@@ -247,15 +252,15 @@ Boolean parameters must be passed as JSON::Boolean objects E.g. JSON::true
 Zcash is based on Bitcoin. Zcash supports all commands in the Bitcoin 
 Core API (as of version 0.11.2).
 
-This module is a fork of Bitcoin::RPC::Client.
+This module is a fork of C<Bitcoin::RPC::Client>.
 
 C<Bitcoin::RPC::Client> is developed by Wesley Hinds. This Zcash fork is 
 mantained by Nils Knieling.
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (c) 2018 Nils Knieling
-Copyright (c) 2016-2018 Wesley Hinds
+ Copyright (c) 2018 Nils Knieling
+ Copyright (c) 2016-2018 Wesley Hinds
 
 This program is free software; you can redistribute it and/or modify it
 under the terms of the the Artistic License (2.0). You may obtain a

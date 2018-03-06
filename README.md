@@ -61,7 +61,13 @@ This method creates a new `Zcash::RPC::Client` and returns it.
 | verify_hostname | 1                |
 | debug           | 0                |
 
+**host** - Address listens for JSON-RPC connections
+
+**user** and **password** - User and Password for JSON-RPC api commands
+
 **cookie** - Absolute path to your RPC cookie file (.cookie). When cookie is defined user and password will be ignored and the contents of cookie will be used instead.
+
+**port** - TCP port for JSON-RPC connections
 
 **wallet** - Work against specific wallet.dat file when Multi-wallet support is
 enabled
