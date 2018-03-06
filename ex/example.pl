@@ -53,10 +53,10 @@ print "total: $z_gettotalbalance->{total}\n";
 # Return a new zaddr for sending and receiving payments.
 # The spending key for this zaddr will be added to the node’s wallet.
 #     https://github.com/zcash/zcash/blob/master/doc/payment-api.md#addresses
-#print ">> z_getnewaddress\n";
-#$z_getnewaddress = $zec->z_getnewaddress;
-#print Dumper($z_getnewaddress);
-#print "new zaddr: $z_getnewaddress\n";
+print ">> z_getnewaddress\n";
+$z_getnewaddress = $zec->z_getnewaddress;
+print Dumper($z_getnewaddress);
+print "new zaddr: $z_getnewaddress\n";
 
 # Returns a list of all the zaddrs in this node’s wallet for which you have a spending key.
 #     https://github.com/zcash/zcash/blob/master/doc/payment-api.md#addresses
