@@ -62,7 +62,7 @@ sub AUTOLOAD {
 
    my $client = $self->jsonrpc;
 
-   # Set timeout because bitcoin is slow
+   # Set timeout because zcashd is slow
    $client->ua->timeout($self->timeout);
 
    # Set Agent, let them know who we be
@@ -234,7 +234,7 @@ However Zcash::RPC::Client will work over SSL with earlier versions
 or with a reverse web proxy such as nginx.
 
 B<verify_hostname> - Disable SSL certificate verification. Needed when
-bitcoind is fronted by a proxy or when using a self-signed certificate.
+zcashd is fronted by a proxy or when using a self-signed certificate.
 
 B<debug> - Turns on raw HTTP request/response output from LWP::UserAgent.
 

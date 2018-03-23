@@ -78,7 +78,7 @@ enabled
 **ssl** - OpenSSL support has been removed from the Bitcoin Core and Zcash project. 
 However `Zcash::RPC::Client` will work over SSL with earlier versions or with a reverse web proxy such as nginx.
 
-**verify_hostname** - Disable SSL certificate verification. Needed when bitcoind is fronted by a proxy or when using a self-signed certificate.
+**verify_hostname** - Disable SSL certificate verification. Needed when zcashd is fronted by a proxy or when using a self-signed certificate.
 
 **debug** - Turns on raw HTTP request/response output from LWP::UserAgent.
 
