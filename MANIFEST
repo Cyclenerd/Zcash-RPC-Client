@@ -1,15 +1,12 @@
 .travis.yml
-Changes
 ex/example.pl
 lib/Zcash/RPC/Client.pm
 Makefile.PL
 MANIFEST			This list of files
 META.json
 META.yml
-README
 README.md
 t/00-load.t
 t/manifest.t
 t/pod-coverage.t
 t/pod.t
-xt/boilerplate.t
