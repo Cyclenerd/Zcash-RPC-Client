@@ -8,7 +8,7 @@ use warnings;
 use Moo;
 use JSON::RPC::Legacy::Client;
 
-our $VERSION  = '1.00';
+our $VERSION  = '1.01';
 
 has jsonrpc  => (is => "lazy", default => sub { "JSON::RPC::Legacy::Client"->new });
 has user     => (is => 'ro');
