@@ -42,9 +42,13 @@
    "resources" : {
       "repository" : {
          "type" : "git",
-         "url" : "https://github.com/Cyclenerd/Zcash-RPC-Client",
-         "web" : ""
-      }
+         "url" : "https://github.com/Cyclenerd/Zcash-RPC-Client.git",
+         "web" : "https://github.com/Cyclenerd/Zcash-RPC-Client"
+      },
+      "bugtracker" : {
+          "web" : "https://github.com/Cyclenerd/Zcash-RPC-Client/issues"
+      },
+      "homepage" : "https://github.com/Cyclenerd/Zcash-RPC-Client"
    },
    "version" : "1.01"
 }
