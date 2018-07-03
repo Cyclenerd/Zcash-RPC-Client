@@ -1,7 +1,7 @@
 # Zcash::RPC::Client -  Zcash Payment API client as a Perl module
 
 [![Build Status](https://travis-ci.org/Cyclenerd/Zcash-RPC-Client.svg?branch=master)](https://travis-ci.org/Cyclenerd/Zcash-RPC-Client)
-[![CPAN](https://img.shields.io/cpan/v/Zcash-RPC-Client.svg)](http://search.cpan.org/perldoc?Zcash%3A%3ARPC%3A%3AClient)
+[![CPAN](https://badge.fury.io/pl/Zcash-RPC-Client.svg)](https://metacpan.org/pod/Zcash::RPC::Client)
 
 This module is a pure Perl implementation of the methods that are currently part of the Zcash Payment API client calls (`zcash-cli`).
 The method names and parameters are identical between the Zcash Payment API reference and this module.
